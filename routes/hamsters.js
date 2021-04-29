@@ -40,11 +40,7 @@ router.get('/random', async (req, res) => {
 		hamsterList.push(data)
 	})
 	
-	function randomHamster(hamsterList) {
-		return hamsterList[Math.floor(Math.random()*hamsterList.length)]
-	}
-
-	res.send(randomHamster)
+	res.send(hamsterList[Math.floor(Math.random()*hamsterList.length)])
 
 } )
 
