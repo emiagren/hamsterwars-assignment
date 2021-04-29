@@ -78,10 +78,11 @@ router.post('/', async (req, res) => {
 
 function isObject(hamsterObject) {
 
-	if( !hamsterObject || !hamsterObject.name || !hamsterObject.age || !hamsterObject.favFood || !hamsterObject.loves || !hamsterObject.imgName || !hamsterObject.wins || !hamsterObject.defeats || !hamsterObject.games )
-		return false
+	if( hamsterObject && ['name', 'age', 'favFood', 'loves', 'imgName', 'wins', 'defeats', 'games'].every(p => hamsterObject.hasOwnProperty(p)))
+		return true
 
-	return true
+	console.log('Not a complete hamster object')	
+	return false	
 }
 
 
