@@ -4,7 +4,7 @@ const cors = require('cors')
 const path = require('path')
 const hamsters = require('./routes/hamsters.js')
 
-const PORT = 1335
+const PORT = process.env.PORT || 1335
 const staticFolder = path.join(__dirname, 'static')
 
 // Middleware
