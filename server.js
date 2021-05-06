@@ -3,23 +3,39 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const hamsters = require('./routes/hamsters.js');
+const hamsters = require('./routes/matches.js');
+const hamsters = require('./routes/losers.js');
+const hamsters = require('./routes/winners.js');
+const hamsters = require('./routes/matchWinners.js');
+
 
 const PORT = process.env.PORT || 1335
 const staticFolder = path.join(__dirname, 'static');
+const imgFolder = path.join(__dirname, 'img');
+
 
 // Middleware
+
+// Logger
 app.use((req, res, next) => {
 	console.log(`${req.method} ${req.url}`, req.params);
 	next();
 })
 
+
 app.use( express.json() );
 app.use( cors() );
 app.use( express.static(staticFolder) );
+app.use( express.static(imgFolder) );
 
 
-// REST API for /hamsters
+// REST API for /hamsters && /matches
 app.use('/hamsters', hamsters);
+app.use('/matches', matches);
+app.use('/losers', losers);
+app.use('/winners', winners);
+app.use('/matchWinners', matchWinners);
+
 
 // Start server
 app.listen(PORT, () => {
