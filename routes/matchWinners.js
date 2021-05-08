@@ -4,5 +4,35 @@ const express = require('express');
 const router = express.Router();
 
 
+// GET /matchWinners/:id
+
+router.get('/', async (req, res) => {
+
+	try {
+
+		const matchRef = db.collection('matches');
+		const hamsterId = req.params.id;
+		const snapshot = await matchRef.where('winnerId', '==', hamsterId).get();
+
+		if(snapshot.empty) {
+			res.status(404).send('Sorry! This hamster has not won any matches yet.');
+			return
+		}
+
+		matchWinners = []
+
+		snapshot.forEach(doc => {
+			const data = doc.data();
+			data.id = doc.id;
+			matchWinners.push(doc.data());
+		})
+
+		res.send(matchWinners);
+
+	} catch(error) {
+		res.status(500).send('Oops! Something went wrong... ' + error.message);
+	}
+})
+
 
 module.exports = router;

@@ -3,6 +3,9 @@ const db = getDataBase();
 const express = require('express');
 const router = express.Router();
 
+
+// GET /winners
+
 router.get('/', async (req, res) => {
 
 	try {

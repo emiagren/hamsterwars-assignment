@@ -10,16 +10,16 @@ const router = express.Router();
 
 		try {
 	
-			const matchRef = db.collection('matches');
-			const snapshot = await matchRef.get();
+			const matchesRef = db.collection('matches');
+			const snapshot = await matchesRef.get();
 		
 			if(snapshot.empty) {
-				res.send(404).send('Oh no! No matches found.');
+				res.status(404).send('Oh no! No matches found.');
 				return
 			}
 		
 			matchList = []
-			
+
 			snapshot.forEach(doc => {
 				const data = doc.data()
 				data.id = doc.id

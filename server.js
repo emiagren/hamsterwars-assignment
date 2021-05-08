@@ -3,10 +3,10 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const hamsters = require('./routes/hamsters.js');
-const hamsters = require('./routes/matches.js');
-const hamsters = require('./routes/losers.js');
-const hamsters = require('./routes/winners.js');
-const hamsters = require('./routes/matchWinners.js');
+const matches = require('./routes/matches.js');
+const losers = require('./routes/losers.js');
+const winners = require('./routes/winners.js');
+const matchWinners = require('./routes/matchWinners.js');
 
 
 const PORT = process.env.PORT || 1335
@@ -16,12 +16,10 @@ const imgFolder = path.join(__dirname, 'img');
 
 // Middleware
 
-// Logger
 app.use((req, res, next) => {
 	console.log(`${req.method} ${req.url}`, req.params);
 	next();
 })
-
 
 app.use( express.json() );
 app.use( cors() );
