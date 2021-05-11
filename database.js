@@ -18,7 +18,7 @@ admin.initializeApp({
 });
 
 function getDataBase() {
-	return admin.firestore()
+	return admin.firestore();
 }
 
-module.exports = getDataBase
+module.exports = getDataBase;
