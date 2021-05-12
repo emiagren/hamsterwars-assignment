@@ -1,7 +1,7 @@
 {
   "name": "hamsterwars-assignment",
   "version": "1.0.0",
-  "description": "Assignment - Hamsterwars a REST API",
+  "description": "Assignment - Hamsterwars",
   "main": "index.js",
   "scripts": {
     "start": "node server.js"
