@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 
 			loserList.push(doc.data());
 		})
-		res.send(loserList)
+		res.status(200).send(loserList)
 
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);

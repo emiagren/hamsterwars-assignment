@@ -24,10 +24,10 @@ router.get('/', async (req, res) => {
 		snapshot.forEach(doc => {
 			const data = doc.data();
 			data.id = doc.id;
-			matchWinners.push(doc.data());
+			matchWinners.push(data);
 		})
 
-		res.send(matchWinners);
+		res.status(200).send(matchWinners);
 
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
