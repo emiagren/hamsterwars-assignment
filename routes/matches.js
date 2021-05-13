@@ -25,7 +25,7 @@ const router = express.Router();
 				data.id = doc.id
 				matchList.push(data)
 			})
-			res.send(matchList)
+			res.status(200).send(matchList);
 
 		} catch(error) {
 			res.status(500).send('Oops! Something went wrong... ' + error.message);
@@ -48,7 +48,7 @@ const router = express.Router();
 			}
 		
 			const data = matchRef.data();
-			res.send(data);
+			res.status(200).send(data);
 
 		} catch(error) {
 			res.status(500).send('Oops! Something went wrong... ' + error.message);
@@ -70,7 +70,7 @@ const router = express.Router();
 			}
 		
 			const docRef = await db.collection('matches').add(newMatchObject);
-			res.send(docRef.id);
+			res.status(200).send(docRef.id);
 
 		} catch(error) {
 			res.status(500).send('Oops! Something went wrong... ' + error.message);

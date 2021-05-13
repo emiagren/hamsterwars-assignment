@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 			data.id = doc.id
 			hamsterList.push(data)
 		})
-		res.send(hamsterList)
+		res.status(200).send(hamsterList);
 
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
@@ -78,7 +78,7 @@ router.get('/:id', async (req, res) => {
 		}
 
 		const data = hamsterRef.data();
-		res.send(data);
+		res.status(200).send(data);
 
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
@@ -100,7 +100,7 @@ router.post('/', async (req, res) => {
 		}
 
 		const docRef = await db.collection('hamsters').add(newHamsterObject);
-		res.send(docRef.id);
+		res.status(200).send(docRef.id);
 
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
