@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 		winnerList = []
 
 		snapshot.forEach(doc => {
-
-			winnerList.push(doc.data());
+			const data = doc.data();
+			winnerList.push(data);
 		})
 		res.send(winnerList)
 
