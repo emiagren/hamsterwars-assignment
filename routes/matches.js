@@ -6,76 +6,77 @@ const router = express.Router();
 
 // GET /matches
 
-	router.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
 
-		try {
+	try {
+
+		const matchesRef = db.collection('matches');
+		const snapshot = await matchesRef.get();
 	
-			const matchesRef = db.collection('matches');
-			const snapshot = await matchesRef.get();
-		
-			if(snapshot.empty) {
-				res.status(404).send('Oh no! No matches found.');
-				return
-			}
-		
-			matchList = []
-
-			snapshot.forEach(doc => {
-				const data = doc.data()
-				data.id = doc.id
-				matchList.push(data)
-			})
-			res.status(200).send(matchList);
-
-		} catch(error) {
-			res.status(500).send('Oops! Something went wrong... ' + error.message);
+		if(snapshot.empty) {
+			res.status(404).send('Oh no! No matches found.');
+			return
 		}
-	})
+	
+		matchList = []
+
+		snapshot.forEach(doc => {
+			const data = doc.data()
+			data.id = doc.id
+			matchList.push(data)
+		})
+		res.status(200).send(matchList);
+
+	} catch(error) {
+		res.status(500).send('Oops! Something went wrong... ' + error.message);
+	}
+});
 	
 
 // GET /matches/:id
 
-	router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
-		try {
+	try {
+
+		const id = req.params.id;
+		const matchRef = await db.collection('matches').doc(id).get();
 	
-			const id = req.params.id;
-			const matchRef = await db.collection('matches').doc(id).get();
-		
-			if(!matchRef.exists) {
-				res.status(404).send(`Oh no! Match with id:${id} does not exist.`);
-				return
-			}
-		
-			const data = matchRef.data();
-			res.status(200).send(data);
-
-		} catch(error) {
-			res.status(500).send('Oops! Something went wrong... ' + error.message);
+		if(!matchRef.exists) {
+			res.status(404).send(`Oh no! Match with id:${id} does not exist.`);
+			return
 		}
-	})
+	
+		const data = matchRef.data();
+		res.status(200).send(data);
+
+	} catch(error) {
+		res.status(500).send('Oops! Something went wrong... ' + error.message);
+	}
+});
 
 	
 // POST /matches
 
-	router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
 
-		try {
+	try {
+
+		const newMatchObject = req.body;
 	
-			const newMatchObject = req.body;
-		
-			if(!newMatchObject.winnerId || !newMatchObject.loserId) {
-				res.sendStatus(400);
-				return
-			}
-		
-			const docRef = await db.collection('matches').add(newMatchObject);
-			res.status(200).send(docRef.id);
+		if(!newMatchObject.winnerId || !newMatchObject.loserId) {
+			res.sendStatus(400);
+			return
+		}
+	
+		const docRef = await db.collection('matches').add(newMatchObject);
+		const newMatchObjId = { id: docRef.id }
+		res.status(200).send(newMatchObjId);
 
-		} catch(error) {
-			res.status(500).send('Oops! Something went wrong... ' + error.message);
-		}	
-	})
+	} catch(error) {
+		res.status(500).send('Oops! Something went wrong... ' + error.message);
+	}	
+});
 
 
 // DELETE /matches/:id
@@ -103,7 +104,7 @@ router.delete('/:id', async (req, res) => {
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 
 module.exports = router;	

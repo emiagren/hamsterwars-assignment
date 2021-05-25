@@ -24,6 +24,6 @@ router.get('/', async (req, res) => {
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 module.exports = router;

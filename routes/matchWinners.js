@@ -6,7 +6,7 @@ const router = express.Router();
 
 // GET /matchWinners/:id
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
 	try {
 
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 		if(snapshot.empty) {
 			res.status(404).send('Sorry! This hamster has not won any matches yet.');
-			return
+			return;
 		}
 
 		matchWinners = []
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 
 module.exports = router;

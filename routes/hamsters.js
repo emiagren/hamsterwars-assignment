@@ -15,10 +15,11 @@ router.get('/', async (req, res) => {
 
 		if(snapshot.empty) {
 			res.send(404).send('Oh no! No hamsters to be found.');
-			return
+			return;
 		}
 
 		hamsterList = []
+		
 		snapshot.forEach(doc => {
 			const data = doc.data()
 			data.id = doc.id
@@ -29,7 +30,7 @@ router.get('/', async (req, res) => {
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 
 // GET /hamsters/random
@@ -43,7 +44,7 @@ router.get('/random', async (req, res) => {
 
 		if(snapshot.empty) {
 			res.send(404).send('Oh no! No hamsters to be found.');
-			return
+			return;
 		}
 
 		hamsterList = []
@@ -60,7 +61,7 @@ router.get('/random', async (req, res) => {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
 
-} )
+});
 
 
 // GET /hamsters/:id
@@ -74,7 +75,7 @@ router.get('/:id', async (req, res) => {
 
 		if(!hamsterRef.exists) {
 			res.status(404).send(`Oh no! Hamster with id:${id} does not exist.`);
-			return
+			return;
 		}
 
 		const data = hamsterRef.data();
@@ -83,7 +84,7 @@ router.get('/:id', async (req, res) => {
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 
 // POST /hamsters
@@ -100,12 +101,13 @@ router.post('/', async (req, res) => {
 		}
 
 		const docRef = await db.collection('hamsters').add(newHamsterObject);
-		res.status(200).send(docRef.id);
+		const newHamsterObjId = { id: docRef.id };
+		res.status(200).send(newHamsterObjId);
 
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 function isObject(hamsterObject) {
 
@@ -120,7 +122,7 @@ function isObject(hamsterObject) {
 	}
 		
 	return false;	
-}
+};
 
 
 // PUT /hamsters/:id
@@ -156,7 +158,7 @@ router.put('/:id', async (req, res) => {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
 
-})
+});
 
 
 // DELETE /hamsters/:id
@@ -184,7 +186,7 @@ router.delete('/:id', async (req, res) => {
 	} catch(error) {
 		res.status(500).send('Oops! Something went wrong... ' + error.message);
 	}
-})
+});
 
 
 module.exports = router;
